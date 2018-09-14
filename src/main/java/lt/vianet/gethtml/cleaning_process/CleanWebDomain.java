@@ -1,5 +1,8 @@
 package lt.vianet.gethtml.cleaning_process;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class CleanWebDomain {
     public String getCleanWebDomain(String domainName) {
 
@@ -8,14 +11,12 @@ public class CleanWebDomain {
 
     private String cleanWebDomain(String domainName) {
 
-        if (domainName.contains("https://")) {
-            domainName = domainName.replace("https://", "");
-        }
-        if (domainName.contains("http://")) {
-            domainName = domainName.replace("http://", "");
-        }
-        if (domainName.contains("/")) {
-            domainName = domainName.replace("/", "");
+        //https://docs.oracle.com/javase/6/docs/api/java/util/regex/Pattern.html#bs
+        Pattern pattern = Pattern.compile("([a-zA-Z_0-9]{1,}[.]*[a-zA-Z_0-9]{2,}+[.][a-zA-Z]{2,8}+)");
+        Matcher m = pattern.matcher(domainName.toString());
+
+        while (m.find()) {
+            domainName = m.group();
         }
 
         return domainName;
